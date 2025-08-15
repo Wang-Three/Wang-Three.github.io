@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王three个人网站</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        nav {
+            display: flex;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-tabs li {
+            margin-right: 20px;
+        }
+        
+        .nav-tabs a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-tabs a:hover {
+            background-color: rgba(44, 62, 80, 0.1);
+        }
+        
+        .nav-tabs a.active {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .language-switcher {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-switcher select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+        
+        .page-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+        }
+        
+        .resource-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .resource-item a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .resource-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 30px;
+            border: 5px solid #ecf0f1;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>王three个人网站</h1>
+            <nav>
+                <ul class="nav-tabs">
+                    <li><a href="#" class="active" data-page="home">首页</a></li>
+                    <li><a href="#" data-page="resources">资源</a></li>
+                    <li><a href="#" data-page="about">王three</a></li>
+                    <li><a href="#" data-page="account">账户</a></li>
+                </ul>
+            </nav>
+            <div class="language-switcher">
+                <select id="language-select">
+                    <option value="zh">中文</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+        </header>
+        
+        <main>
+            <div id="home-page" class="page-content">
+                <h2>欢迎来到王three个人网站</h2>
+                <p>你可以在这里浏览一些关于王three的内容。</p>
+                <p>网站正在不断完善中，感谢您的访问！</p>
+                <div style="margin-top: 30px; padding: 20px; background-color: #f1f8fe; border-radius: 5px;">
+                    <h3>最新动态</h3>
+                    <ul>
+                        <li>2025.8.15:网站正式上线</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="resources-page" class="page-content hidden">
+                <h2>资源分享</h2>
+                <p>这里是王three的一些资源，点击链接可以下载。</p>
+                
+                <div class="resource-item">
+                    <h3>DeepSeek R1 by 王three</h3>
+                    <p>王three版deepseek（部分功能尚未完善）</p>
+                    <a href="downloads/Deepseek R1 Setup.zip" download="Deepseek R1 Setup.zip">下载--></a>
+                </div>
+                
+                <div class="resource-item">
+                    <h3>小天才破解工具v1.5</h3>
+                    <p>最新版小天才破解工具</p>
+                    <a href="downloads/XTC_Cracker v1.5 Setup.zip" download="XTC_Cracker Setup.zip">下载--></a>
+                </div>
+                
+                <div class="resource-item">
+                    <h3>小天才破解工具（老版本整合包）</h3>
+                    <p>老版本的小天才破解工具，bug较多，慎用</p>
+                    <a href="downloads/XTC_Cracker整合包.zip" download="XTC_Cracker整合包.zip">下载--></a>
+                </div>
+            </div>
+            
+            <div id="about-page" class="page-content hidden">
+                <h2>关于王three</h2>
+                <div class="profile">
+                    <div class="profile-info">
+                        <p>你好，我是王three。</p>
+                        <p>想不出别的介绍了，以后有时间再补上。</p>
+                        <a href="https://www.douyin.com/user/self?from_tab_name=main&showTab=favorite_collection">点击这行字抖音关注我</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="account-page" class="page-content hidden">
+                <h2>账户</h2>
+                <div style="text-align: center; padding: 50px 0;">
+                    <h3>功能尚未开发 敬请期待</h3>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 页面切换功能
+        document.querySelectorAll('.nav-tabs a').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 移除所有标签的active类
+                document.querySelectorAll('.nav-tabs a').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // 给当前点击的标签添加active类
+                this.classList.add('active');
+                
+                // 隐藏所有页面
+                document.querySelectorAll('.page-content').forEach(page => {
+                    page.classList.add('hidden');
+                });
+                
+                // 显示对应的页面
+                const pageId = this.getAttribute('data-page') + '-page';
+                document.getElementById(pageId).classList.remove('hidden');
+            });
+        });
+        
+        // 语言切换功能
+        document.getElementById('language-select').addEventListener('change', function() {
+            if(this.value === 'en') {
+                alert('The English version is under development. Currently only Chinese is available.');
+                this.value = 'zh';
+            }
+        });
+    </script>
+</body>
+</html>
