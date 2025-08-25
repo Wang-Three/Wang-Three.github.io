@@ -124,6 +124,48 @@
         .hidden {
             display: none;
         }
+        
+        /* 新增：网友投稿卡片样式 */
+        .submission-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .submission-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #e9ecef;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .submission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .submission-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .submission-card p {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+        }
     </style>
 </head>
 <body>
@@ -208,9 +250,18 @@
             
             <div id="account-page" class="page-content hidden">
                 <h2>网友投稿</h2>
-                <div style="text-align: center; padding: 50px 0;">
-                    <h3>目前还没有网友投稿哦~</h3>
-                    <p>如果你有什么想法或反馈，欢迎联系王three！</p>
+                
+                <!-- 投稿卡片容器 -->
+                <div class="submission-container">
+                    <a href="subs/good_webs.html" class="submission-card" target="_blank">
+                        <h3>好用网站大全</h3>
+                        <p>收集了一些实用有趣的网站，全都免费。</p>
+                        <li>由 [多位网友] 提供</li>
+                    </a>
+                </div>
+                <div class="empty-state">
+                    <h3>期待更多网友投稿！</h3>
+                    <p>如果你有什么想法或资源想要分享，欢迎联系王three！</p>
                 </div>
             </div>
         </main>
