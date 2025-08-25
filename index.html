@@ -27,6 +27,7 @@
             padding: 20px 0;
             border-bottom: 1px solid #ddd;
             margin-bottom: 30px;
+            position: relative;
         }
         
         h1 {
@@ -85,6 +86,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             min-height: 400px;
+            transition: opacity 0.3s ease;
         }
         
         .resource-item {
@@ -166,9 +168,168 @@
             text-align: center;
             padding: 50px 0;
         }
+        
+        /* 加载指示器样式 */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 9999;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 9998;
+        }
+        
+        /* 搜索框样式 */
+        .search-container {
+            position: absolute;
+            right: 150px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px 0 0 20px;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input.expanded {
+            width: 200px;
+            opacity: 1;
+        }
+        
+        .search-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+        }
+        
+        .search-results {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .search-result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .no-results {
+            padding: 10px;
+            color: #777;
+            text-align: center;
+        }
+        
+        /* 回到顶部按钮样式 */
+        .back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            background: #3498db;
+            transform: translateY(-5px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .search-container {
+                position: static;
+                transform: none;
+                margin-top: 15px;
+                width: 100%;
+            }
+            
+            .search-input.expanded {
+                width: 100%;
+            }
+            
+            .search-results {
+                width: 100%;
+                right: auto;
+                left: 0;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .language-switcher {
+                margin-top: 15px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 加载指示器 -->
+    <div class="overlay" id="overlay"></div>
+    <div class="loader" id="loader"></div>
+    
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTop">↑</button>
+    
     <div class="container">
         <header>
             <h1>王three个人网站</h1>
@@ -180,6 +341,16 @@
                     <li><a href="#" data-page="account">网友投稿</a></li>
                 </ul>
             </nav>
+            
+            <!-- 搜索框 -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="搜索资源...">
+                    <button class="search-btn" id="searchBtn">🔍</button>
+                </div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            
             <div class="language-switcher">
                 <select id="language-select">
                     <option value="zh">中文</option>
@@ -220,7 +391,7 @@
                     <p>本网站同款的手机可用app（仅安卓）</p>
                     <a href="45a01d35b78c17fdf65466c5aa53d7f7.apk" download="45a01d35b78c17fdf65466c5aa53d7f7.apk">下载--></a>
                 </div>
-                
+
                 <div class="resource-item">
                     <h3>连点器</h3>
                     <p>普通的连点器</p>
@@ -261,7 +432,7 @@
                 
                 <!-- 投稿卡片容器 -->
                 <div class="submission-container">
-                    <a href="subs/good_webs.html" class="submission-card" target="_blank">
+                    <a href="subs/good_webs.html" class="submission-card">
                         <h3>好用网站大全</h3>
                         <p>收集了一些实用有趣的网站，全都免费。</p>
                         <li>由 [多位网友] 提供</li>
@@ -281,6 +452,9 @@
             tab.addEventListener('click', function(e) {
                 e.preventDefault();
                 
+                // 显示加载指示器
+                showLoader();
+                
                 // 移除所有标签的active类
                 document.querySelectorAll('.nav-tabs a').forEach(t => {
                     t.classList.remove('active');
@@ -294,9 +468,15 @@
                     page.classList.add('hidden');
                 });
                 
-                // 显示对应的页面
-                const pageId = this.getAttribute('data-page') + '-page';
-                document.getElementById(pageId).classList.remove('hidden');
+                // 模拟加载延迟
+                setTimeout(() => {
+                    // 显示对应的页面
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    document.getElementById(pageId).classList.remove('hidden');
+                    
+                    // 隐藏加载指示器
+                    hideLoader();
+                }, 500);
             });
         });
         
@@ -307,8 +487,130 @@
                 this.value = 'zh';
             }
         });
+        
+        // 加载指示器功能
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+        
+        // 搜索功能
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        
+        // 切换搜索框展开状态
+        searchBtn.addEventListener('click', function() {
+            searchInput.classList.toggle('expanded');
+            if (searchInput.classList.contains('expanded')) {
+                searchInput.focus();
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // 搜索功能
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim().toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            // 获取所有资源项
+            const resources = document.querySelectorAll('.resource-item');
+            let resultsHtml = '';
+            let resultCount = 0;
+            
+            resources.forEach(resource => {
+                const title = resource.querySelector('h3').textContent.toLowerCase();
+                const description = resource.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(query) || description.includes(query)) {
+                    resultCount++;
+                    resultsHtml += `
+                        <div class="search-result-item" data-target="resources">
+                            <strong>${resource.querySelector('h3').textContent}</strong>
+                            <p>${resource.querySelector('p').textContent}</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            if (resultCount > 0) {
+                searchResults.innerHTML = resultsHtml;
+                searchResults.style.display = 'block';
+                
+                // 添加搜索结果点击事件
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const targetPage = this.getAttribute('data-target');
+                        
+                        // 切换到对应页面
+                        document.querySelectorAll('.nav-tabs a').forEach(tab => {
+                            tab.classList.remove('active');
+                            if (tab.getAttribute('data-page') === targetPage) {
+                                tab.classList.add('active');
+                            }
+                        });
+                        
+                        document.querySelectorAll('.page-content').forEach(page => {
+                            page.classList.add('hidden');
+                        });
+                        
+                        document.getElementById(targetPage + '-page').classList.remove('hidden');
+                        
+                        // 隐藏搜索框和结果
+                        searchInput.classList.remove('expanded');
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                        
+                        // 滚动到对应资源项
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: document.getElementById(targetPage + '-page').offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }, 100);
+                    });
+                });
+            } else {
+                searchResults.innerHTML = '<div class="no-results">未找到相关资源</div>';
+                searchResults.style.display = 'block';
+            }
+        });
+        
+        // 点击页面其他区域关闭搜索结果
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchResults.style.display = 'none';
+                searchInput.classList.remove('expanded');
+            }
+        });
+        
+        // 回到顶部功能
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     </script>
 </body>
-
 </html>
-
