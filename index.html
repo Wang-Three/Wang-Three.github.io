@@ -388,6 +388,33 @@
                         <li>2025.8.15:网站正式上线</li>
                     </ul>
                 </div>
+
+                <div style="margin-top: 30px;">
+                    <!-- 动态时钟组件 -->
+                    <div style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                        <h3 style="margin-top: 0; font-weight: normal;">当前时间</h3>
+                        <div style="display: flex; align-items: baseline; gap: 10px;">
+                            <div id="clock" style="font-size: 32px; font-family: monospace;"></div>
+                            <div id="date" style="color: #bdc3c7; font-size: 14px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 随机颜色工具 -->
+                    <div>
+                        <h3>随机颜色生成器（做着玩的）</h3>
+                        <div style="background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <button id="randomColorBtn" style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                生成随机颜色
+                            </button>
+            
+                            <div id="colorDisplay" style="width: 150px; height: 150px; margin: 15px 0; background-color: #eee; border-radius: 5px; transition: background-color 0.5s;"></div>
+            
+                            <div id="colorValue" style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; font-family: monospace; color: #333;">
+                                颜色值: rgb(238, 238, 238)
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div id="resources-page" class="page-content hidden">
@@ -726,6 +753,36 @@
             setTimeout(() => {
                 window.location.href = this.href;
             }, 800);
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+        
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            const weekday = weekdays[now.getDay()];
+        
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('date').textContent = `${year}.${month}.${day} ${weekday}`;
+        }
+        // 初始化时钟并每秒更新
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // 随机颜色功能
+        document.getElementById('randomColorBtn').addEventListener('click', function() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            const color = `rgb(${r}, ${g}, ${b})`;
+        
+            document.getElementById('colorDisplay').style.backgroundColor = color;
+            document.getElementById('colorValue').textContent = `颜色值: ${color}`;
         });
     </script>
 </body>
