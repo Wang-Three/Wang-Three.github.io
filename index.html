@@ -94,6 +94,14 @@
             padding: 15px;
             background-color: #f8f9fa;
             border-radius: 5px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-item.highlight {
+            background-color: #e3f2fd;
+            box-shadow: 0 0 0 2px #2196f3;
+            transform: scale(1.02);
         }
         
         .resource-item a {
@@ -127,7 +135,7 @@
             display: none;
         }
         
-        /* 新增：网友投稿卡片样式 */
+        /* 网友投稿卡片样式 */
         .submission-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -152,6 +160,12 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             text-decoration: none;
             color: inherit;
+        }
+        
+        .submission-card.highlight {
+            background-color: #e3f2fd;
+            box-shadow: 0 0 0 2px #2196f3;
+            transform: scale(1.02) translateY(-5px);
         }
         
         .submission-card h3 {
@@ -256,6 +270,7 @@
             padding: 10px;
             border-bottom: 1px solid #eee;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
         
         .search-result-item:hover {
@@ -345,7 +360,7 @@
             <!-- 搜索框 -->
             <div class="search-container">
                 <div class="search-box">
-                    <input type="text" class="search-input" id="searchInput" placeholder="搜索资源...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="搜索内容...">
                     <button class="search-btn" id="searchBtn">🔍</button>
                 </div>
                 <div class="search-results" id="searchResults"></div>
@@ -379,38 +394,38 @@
                 <h2>资源分享</h2>
                 <p>这里是王three的一些资源，点击链接可以下载。</p>
                 
-                <div class="resource-item">
+                <div class="resource-item" data-resource-id="iwanna">
                     <h3>I wanna do something</h3>
                     <p>由王three制作的iwanna系列游戏</p>
                     <p>注：无可直接运行的.exe程序，需在I wanna be the creator上运行</p>
                     <i>该作品目前正在制作中，还未上线，敬请期待！</i>
                 </div>
-
+                
                 <div class="resource-item">
                     <h3>王three   APP</h3>
                     <p>本网站同款的手机可用app（仅安卓）</p>
                     <a href="45a01d35b78c17fdf65466c5aa53d7f7.apk" download="45a01d35b78c17fdf65466c5aa53d7f7.apk">下载--></a>
                 </div>
-
-                <div class="resource-item">
+                
+                <div class="resource-item" data-resource-id="clicker">
                     <h3>连点器</h3>
                     <p>普通的连点器</p>
                     <a href="连点器.zip" download="连点器.zip">下载--></a>
                 </div>
                 
-                <div class="resource-item">
+                <div class="resource-item" data-resource-id="deepseek">
                     <h3>DeepSeek R1 by 王three</h3>
                     <p>王three版deepseek（部分功能尚未完善）</p>
                     <a href="Deepseek R1 Setup.zip" download="Deepseek R1 Setup.zip">下载--></a>
                 </div>
                 
-                <div class="resource-item">
+                <div class="resource-item" data-resource-id="xtc-v1.5">
                     <h3>小天才破解工具v1.5</h3>
                     <p>最新版小天才破解工具</p>
                     <a href="XTC_Cracker v1.5 Setup.zip" download="XTC_Cracker Setup.zip">下载--></a>
                 </div>
                 
-                <div class="resource-item">
+                <div class="resource-item" data-resource-id="xtc-old">
                     <h3>小天才破解工具（老版本整合包）</h3>
                     <p>老版本的小天才破解工具，bug较多，慎用</p>
                     <a href="XTC_Cracker整合包.zip" download="XTC_Cracker整合包.zip">下载--></a>
@@ -432,7 +447,7 @@
                 
                 <!-- 投稿卡片容器 -->
                 <div class="submission-container">
-                    <a href="subs/good_webs.html" class="submission-card">
+                    <a href="good_webs.html" class="submission-card" data-submission-id="good-webs" id="external-link">
                         <h3>好用网站大全</h3>
                         <p>收集了一些实用有趣的网站，全都免费。</p>
                         <li>由 [多位网友] 提供</li>
@@ -452,9 +467,6 @@
             tab.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // 显示加载指示器
-                showLoader();
-                
                 // 移除所有标签的active类
                 document.querySelectorAll('.nav-tabs a').forEach(t => {
                     t.classList.remove('active');
@@ -468,15 +480,12 @@
                     page.classList.add('hidden');
                 });
                 
-                // 模拟加载延迟
-                setTimeout(() => {
-                    // 显示对应的页面
-                    const pageId = this.getAttribute('data-page') + '-page';
-                    document.getElementById(pageId).classList.remove('hidden');
-                    
-                    // 隐藏加载指示器
-                    hideLoader();
-                }, 500);
+                // 显示对应的页面
+                const pageId = this.getAttribute('data-page') + '-page';
+                document.getElementById(pageId).classList.remove('hidden');
+                
+                // 滚动到页面顶部
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
         
@@ -523,21 +532,68 @@
                 return;
             }
             
-            // 获取所有资源项
-            const resources = document.querySelectorAll('.resource-item');
             let resultsHtml = '';
             let resultCount = 0;
             
+            // 搜索资源项
+            const resources = document.querySelectorAll('.resource-item');
             resources.forEach(resource => {
                 const title = resource.querySelector('h3').textContent.toLowerCase();
                 const description = resource.querySelector('p').textContent.toLowerCase();
+                const resourceId = resource.getAttribute('data-resource-id');
                 
                 if (title.includes(query) || description.includes(query)) {
                     resultCount++;
                     resultsHtml += `
-                        <div class="search-result-item" data-target="resources">
-                            <strong>${resource.querySelector('h3').textContent}</strong>
+                        <div class="search-result-item" data-target="resources" data-item-id="${resourceId}" data-type="resource">
+                            <strong>资源: ${resource.querySelector('h3').textContent}</strong>
                             <p>${resource.querySelector('p').textContent}</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            // 搜索网友投稿
+            const submissions = document.querySelectorAll('.submission-card');
+            submissions.forEach(submission => {
+                const title = submission.querySelector('h3').textContent.toLowerCase();
+                const description = submission.querySelector('p').textContent.toLowerCase();
+                const submissionId = submission.getAttribute('data-submission-id');
+                
+                if (title.includes(query) || description.includes(query)) {
+                    resultCount++;
+                    resultsHtml += `
+                        <div class="search-result-item" data-target="account" data-item-id="${submissionId}" data-type="submission">
+                            <strong>投稿: ${submission.querySelector('h3').textContent}</strong>
+                            <p>${submission.querySelector('p').textContent}</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            // 搜索首页内容
+            const homeItems = document.querySelectorAll('#home-page h2, #home-page h3, #home-page p, #home-page li');
+            homeItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(query) && text.length > 10) { // 避免匹配太短的文本
+                    resultCount++;
+                    resultsHtml += `
+                        <div class="search-result-item" data-target="home" data-type="home">
+                            <strong>首页: ${item.textContent.substring(0, 50)}${item.textContent.length > 50 ? '...' : ''}</strong>
+                        </div>
+                    `;
+                }
+            });
+            
+            // 搜索关于页面内容
+            const aboutItems = document.querySelectorAll('#about-page h2, #about-page p');
+            aboutItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(query) && text.length > 10) {
+                    resultCount++;
+                    resultsHtml += `
+                        <div class="search-result-item" data-target="about" data-type="about">
+                            <strong>关于: ${item.textContent.substring(0, 50)}${item.textContent.length > 50 ? '...' : ''}</strong>
                         </div>
                     `;
                 }
@@ -551,6 +607,8 @@
                 document.querySelectorAll('.search-result-item').forEach(item => {
                     item.addEventListener('click', function() {
                         const targetPage = this.getAttribute('data-target');
+                        const itemId = this.getAttribute('data-item-id');
+                        const itemType = this.getAttribute('data-type');
                         
                         // 切换到对应页面
                         document.querySelectorAll('.nav-tabs a').forEach(tab => {
@@ -571,17 +629,64 @@
                         searchResults.style.display = 'none';
                         searchInput.value = '';
                         
-                        // 滚动到对应资源项
+                        // 滚动到对应项目
                         setTimeout(() => {
-                            window.scrollTo({
-                                top: document.getElementById(targetPage + '-page').offsetTop - 80,
-                                behavior: 'smooth'
-                            });
+                            if (itemType === 'resource') {
+                                const targetResource = document.querySelector(`[data-resource-id="${itemId}"]`);
+                                if (targetResource) {
+                                    // 移除之前的高亮
+                                    document.querySelectorAll('.resource-item.highlight').forEach(item => {
+                                        item.classList.remove('highlight');
+                                    });
+                                    
+                                    // 添加高亮效果
+                                    targetResource.classList.add('highlight');
+                                    
+                                    // 滚动到目标元素
+                                    targetResource.scrollIntoView({ 
+                                        behavior: 'smooth', 
+                                        block: 'center'
+                                    });
+                                    
+                                    // 3秒后移除高亮
+                                    setTimeout(() => {
+                                        targetResource.classList.remove('highlight');
+                                    }, 3000);
+                                }
+                            } else if (itemType === 'submission') {
+                                const targetSubmission = document.querySelector(`[data-submission-id="${itemId}"]`);
+                                if (targetSubmission) {
+                                    // 移除之前的高亮
+                                    document.querySelectorAll('.submission-card.highlight').forEach(item => {
+                                        item.classList.remove('highlight');
+                                    });
+                                    
+                                    // 添加高亮效果
+                                    targetSubmission.classList.add('highlight');
+                                    
+                                    // 滚动到目标元素
+                                    targetSubmission.scrollIntoView({ 
+                                        behavior: 'smooth', 
+                                        block: 'center'
+                                    });
+                                    
+                                    // 3秒后移除高亮
+                                    setTimeout(() => {
+                                        targetSubmission.classList.remove('highlight');
+                                    }, 3000);
+                                }
+                            } else {
+                                // 对于首页和关于页面，滚动到顶部
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: 'smooth'
+                                });
+                            }
                         }, 100);
                     });
                 });
             } else {
-                searchResults.innerHTML = '<div class="no-results">未找到相关资源</div>';
+                searchResults.innerHTML = '<div class="no-results">未找到相关内容</div>';
                 searchResults.style.display = 'block';
             }
         });
@@ -610,6 +715,17 @@
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+        
+        // 外部链接点击事件 - 显示加载指示器
+        document.getElementById('external-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showLoader();
+            
+            // 模拟加载延迟，然后跳转
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 800);
         });
     </script>
 </body>
