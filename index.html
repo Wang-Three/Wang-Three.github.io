@@ -334,6 +334,7 @@
             .language-switcher {
                 margin-top: 15px;
             }
+            
         }
     </style>
 </head>
@@ -381,8 +382,9 @@
                 <p>网站正在不断完善中，感谢您的访问！</p>
                 <div style="margin-top: 30px; padding: 20px; background-color: #f1f8fe; border-radius: 5px;">
                     <h3>最新动态</h3>
+                    <h4>注：更新优化将不会放入动态中</h4>
                     <ul>
-                        <li>2025.8.26:简单更新优化</li>
+			            <li>2025.8.29:增加网友投稿</li>
                         <li>2025.8.25:增加网友投稿并简单优化</li>
                         <li>2025.8.24:网站打包成app并上线</li>
                         <li>2025.8.17:优化网站，修复bug</li>
@@ -465,6 +467,7 @@
                 <div class="profile">
                     <div class="profile-info">
                         <p>你好，我是王three，是个人。</p>
+                        <p>我真的太<del>衰</del>帅了。</p>
                         <p>想不出别的介绍了，以后有时间再补上。</p>
                     </div>
                 </div>
@@ -474,13 +477,22 @@
                 <h2>网友投稿</h2>
                 
                 <!-- 投稿卡片容器 -->
-                <div class="submission-container">
-                    <a href="subs/good_webs.html" class="submission-card" data-submission-id="good-webs" id="external-link">
-                        <h3>好用网站大全</h3>
-                        <p>收集了一些实用有趣的网站，全都免费。</p>
-                        <li>由 [多位网友] 提供</li>
+            <div class="submission-container">
+                <a href="subs/good_webs.html" class="submission-card" data-submission-id="good-webs" id="external-link">
+                    <h3>好用网站大全</h3>
+                    <p>收集了一些实用有趣的网站，全都免费。</p>
+                    <li>由 [多位网友] 提供</li>
+                </a>
+
+                <div class="float">
+                    <a href="subs/OMOFUN.zip" class="submission-card" download="subs/OMOFUN.zip">
+                    <h3>全能的观影网站</h3>
+                        <p>无需登录也可以观看各大动漫电影。</p>
+                        <li>由小天才用户"科技少年"提供</li>
                     </a>
                 </div>
+            </div>
+
                 <div class="empty-state">
                     <h3>期待更多网友投稿！</h3>
                     <p>如果你有什么想法或资源想要分享，欢迎联系王three！</p>
@@ -787,5 +799,4 @@
         });
     </script>
 </body>
-
 </html>
