@@ -87,6 +87,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             min-height: 400px;
             transition: opacity 0.3s ease;
+            position: relative;
         }
         
         .resource-item {
@@ -307,6 +308,32 @@
             transform: translateY(-5px);
         }
         
+        /* 打赏按钮样式 */
+        .donate-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+        }
+        
+        .donate-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+        }
+        
         /* 响应式设计 */
         @media (max-width: 768px) {
             .search-container {
@@ -334,7 +361,16 @@
             .language-switcher {
                 margin-top: 15px;
             }
-            
+
+            .donate-container {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .donate-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -424,6 +460,12 @@
                 <h2>资源分享</h2>
                 <p>这里是王three的一些资源，点击链接可以下载。</p>
                 
+                <div class="resource-item" data-resource-id="pvz_plus_version_three">
+                    <h3>植物大战僵尸Three版</h3>
+                    <p>王three制作的植物大战僵尸改版</p>
+                    <i>该作品目前正在制作中，还未上线，敬请期待！</i>
+                </div>
+                
                 <div class="resource-item" data-resource-id="iwanna">
                     <h3>I wanna do something</h3>
                     <p>由王three制作的iwanna系列游戏</p>
@@ -431,7 +473,7 @@
                     <i>该作品目前正在制作中，还未上线，敬请期待！</i>
                 </div>
                 
-                <div class="resource-item">
+                <div class="resource-item" data-resource-id="app">
                     <h3>王three   APP</h3>
                     <p>本网站同款的手机可用app（仅安卓）</p>
                     <a href="45a01d35b78c17fdf65466c5aa53d7f7.apk" download="45a01d35b78c17fdf65466c5aa53d7f7.apk">下载--></a>
@@ -445,7 +487,7 @@
                 
                 <div class="resource-item" data-resource-id="deepseek">
                     <h3>DeepSeek R1 by 王three</h3>
-                    <p>王three版deepseek（部分功能尚未完善）</p>
+                    <p>王three版deepseek（部分功能尚未完善)</p>
                     <a href="Deepseek R1 Setup.zip" download="Deepseek R1 Setup.zip">下载--></a>
                 </div>
                 
@@ -467,9 +509,14 @@
                 <div class="profile">
                     <div class="profile-info">
                         <p>你好，我是王three，是个人。</p>
-                        <p>我真的太<del>衰</del>帅了。</p>
+                        <p>我真的太<del>衰气</del>帅气了。</p>
                         <p>想不出别的介绍了，以后有时间再补上。</p>
                     </div>
+                </div>
+                
+                <!-- 打赏按钮 -->
+                <div class="donate-container">
+                    <a href="reward.html" class="donate-btn">打赏作者</a>
                 </div>
             </div>
             
@@ -478,7 +525,7 @@
                 
                 <!-- 投稿卡片容器 -->
             <div class="submission-container">
-                <a href="subs/good_webs.html" class="submission-card" data-submission-id="good-webs" id="external-link">
+                <a href="subs/good_webs.html" class="submission-card" data-submission-id="good-webs">
                     <h3>好用网站大全</h3>
                     <p>收集了一些实用有趣的网站，全都免费。</p>
                     <li>由 [多位网友] 提供</li>
@@ -489,6 +536,14 @@
                     <h3>全能的观影网站</h3>
                         <p>无需登录也可以观看各大动漫电影。</p>
                         <li>由小天才用户"科技少年"提供</li>
+                    </a>
+                </div>
+
+                <div class="float">
+                    <a href="subs/catpics.html" class="submission-card" data-submission-id="catpics">
+                        <h3>可爱的猫猫图片</h3>
+                        <p>有一些网友自家养的猫的图片。</p>
+                        <li>由小天才用户"小妞宝"提供</li>
                     </a>
                 </div>
             </div>
@@ -755,17 +810,6 @@
                 top: 0,
                 behavior: 'smooth'
             });
-        });
-        
-        // 外部链接点击事件 - 显示加载指示器
-        document.getElementById('external-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            showLoader();
-            
-            // 模拟加载延迟，然后跳转
-            setTimeout(() => {
-                window.location.href = this.href;
-            }, 800);
         });
 
         function updateClock() {
