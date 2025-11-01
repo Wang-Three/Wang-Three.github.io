@@ -433,6 +433,23 @@
             transform: translateX(0);
             display: block; /* 显示时设置为block */
         }
+        
+        /* 二维码样式 */
+        .qr-code {
+            display: block;
+            margin: 20px auto;
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .qr-text {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -487,12 +504,17 @@
                         📋也给别人看看去
                     </button>
                     <p style="color: #666; font-size: 14px; margin-top: 10px;">劝你最好别点，点了也别转，要不作者半夜岂不笑死在床上？</p>
+                    
+                    <!-- 添加的二维码和文字 -->
+                    <img src="images/erweima.png" alt="二维码" class="qr-code">
+                    <p class="qr-text">扫描此二维码也可访问网站哦！</p>
                 </div>
                 
                 <div style="margin-top: 30px; padding: 20px; background-color: #f1f8fe; border-radius: 5px;">
                     <h3>最新动态</h3>
                     <h4>注：更新优化将不会放入动态中</h4>
                     <ul>
+                        <li>2025.10.12:更新</li>
                         <li>2025.9.13:增加网友投稿并大更新</li>
 			            <li>2025.8.29:增加网友投稿</li>
                         <li>2025.8.25:增加网友投稿并简单优化</li>
@@ -533,29 +555,17 @@
                 <h2>资源分享</h2>
                 <p>这里是王three的一些资源，点击链接可以下载。</p>
                 
-                <div class="resource-item" data-resource-id="pvz_plus_version_three">
-                    <h3>植物大战僵尸Three版</h3>
-                    <p>王three制作的植物大战僵尸改版</p>
-                    <i>该作品目前正在制作中，还未上线，敬请期待！</i>
-                </div>
-                
                 <div class="resource-item" data-resource-id="iwanna">
                     <h3>I wanna do something</h3>
                     <p>由王three制作的iwanna系列游戏</p>
                     <p>注：无可直接运行的.exe程序，需在I wanna be the creator上运行</p>
                     <i>该作品目前正在制作中，还未上线，敬请期待！</i>
                 </div>
-                
-                <div class="resource-item" data-resource-id="app">
-                    <h3>王three   APP</h3>
-                    <p>本网站同款的手机可用app（仅安卓）</p>
-                    <a href="45a01d35b78c17fdf65466c5aa53d7f7.apk" download="45a01d35b78c17fdf65466c5aa53d7f7.apk">下载--></a>
-                </div>
 
                 <div class="resource-item" data-resource-id="clicker">
                     <h3>连点器</h3>
                     <p>普通的连点器</p>
-                    <a href="clicker.zip" download="clicker.zip">下载--></a>
+                    <a href="clicker.exe" download="clicker.exe">下载--></a>
                 </div>
                 
                 <div class="resource-item" data-resource-id="deepseek">
@@ -567,7 +577,7 @@
                 <div class="resource-item" data-resource-id="xtc-v1.5">
                     <h3>小天才破解工具v1.5</h3>
                     <p>最新版小天才破解工具</p>
-                    <a href="downloads/XTC_Cracker v1.5 Setup.zip" download="downloads/XTC_Cracker v 1.5 Setup.zip">下载--></a>
+                    <a href="XTC_Cracker v1.5 Setup.zip" download="downloads/XTC_Cracker v1.5 Setup.zip">下载--></a>
                 </div>
                 
                 <div class="resource-item" data-resource-id="xtc-old">
@@ -925,7 +935,7 @@
 里面有许多关于王three的内容。
 欢迎您来访问！😊
 网址：https://wang-three.github.io
-（网站不稳定，需要多刷新才能进，进不去的话建议使用加速器）
+（不稳定，进不去的话建议用加速器）
 ————内容来自网站复制`;
 
             // 使用Clipboard API复制文本
@@ -952,5 +962,5 @@
         });
     </script>
 </body>
-</html>
 
+</html>
